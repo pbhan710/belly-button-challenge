@@ -15,20 +15,31 @@ function init() {
         let names = result.names;
         let samples = result.samples;
 
+        // Populate Demographic Info of first test subject ID.
+        populateDemographics(0)
         // Plot top 10 OTUs horizontal bar chart from first test subject ID.
         plotTop10OTUs(0);
-        // Plot bubble chart that displays each sample.
+        // Plot bubble chart that displays each sample of first test subject ID.
         plotSamplesBubbleChart(0);
     });
 };
 
-
+// Define a function to populate the Demographic Info card.
 function populateDemographics(index) {
+    // Fetch JSON results from the Promise object.
     promiseObject.then(function(result) {
-        let sample = result.samples[index];
+        // Store the index's sample array and its metadata.
+        let metadata = result.metadata[index];
 
-    })
-}
+        // Loop through each key in the sample's metadata to add to the Demographic Info card.
+        for (let key in metadata) {
+            // Select the card with the ID and append a <p> tag.
+            let demographicInfo = d3.select("#sample-metadata").append("p");
+            // Assign the key and value to the appended <p> tag.
+            demographicInfo.text(`${key}: ${metadata[key]}`);
+        };
+    });
+};
 
 // Define a function to plot the top 10 OTUs horizontal bar chart.
 function plotTop10OTUs (index) {
@@ -103,12 +114,12 @@ function populateDropdown() {
         let names = result.names;
 
         // Loop through names array and append each ID to the dropdown.
-        for (i = 0; i < names.length; i++) {
-            // Select the dropdown and append an option tag with the ID.
+        for (let i = 0; i < names.length; i++) {
+            // Select the dropdown with the ID and append an option tag.
             let dropdownOption = d3.select("#selDataset").append("option");
             // Assign the ID itself as the text to the appended option tag.
             dropdownOption.text(names[i]);
-        }
+        };
     });
 };
 
