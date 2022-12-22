@@ -15,6 +15,7 @@ function init() {
         let names = result.names;
         let samples = result.samples;
 
+        console.log(result)
         // Plot top 10 OTUs horizontal bar chart from first test subject ID.
         plotTop10OTUs(0);
     })
@@ -26,20 +27,31 @@ function plotTop10OTUs (index) {
     promiseObject.then(function(result) {
         // Store the index's sample array and its keys for plotting in variables.
         let sample = result.samples[index];
-        let otuIDs = sample.otu_ids;
-        let values = sample.sample_values;
-        let otuLabels = sample.otu_labels;
+        let otuIDs = sample.otu_ids.slice(0, 10).map(item => `OTU ${item}`);
+        let values = sample.sample_values.slice(0, 10);
+        let otuLabels = sample.otu_labels.slice(0, 10);
 
         // Store Plotly objects for plotting.
         let data = [{
             type: "bar",
-            x: sample.sample_values,
-            y: sample.otu_ids,
-            orientation: "h"
+            x: values,
+            y: otuIDs,
+            text: otuLabels,
+            orientation: "h",
+            transforms: [{
+                type: "sort",
+                target: "x",
+                order: "ascending"
+            }]
         }];
 
+        let layout = {
+            title: `Top 10 OTUs for Test Subject ID ${sample.id}`
+        };
+
+        console.log(sample);
         // Plot the horizontal bar chart.
-        Plotly.newPlot("bar", data);
+        Plotly.newPlot("bar", data, layout);
     })
 }
 
