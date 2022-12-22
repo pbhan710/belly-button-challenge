@@ -25,7 +25,7 @@ The dataset reveals that a small handful of microbial species (also called opera
 
 4. Display the sample metadata, i.e., an individual's demographic information. Display each key-value pair from the metadata JSON object somewhere on the page.
 
-5. Update all the plots when a new sample is selected. Additionally, you are welcome to create any layout that you would like for your dashboard. An example dashboard is shown as follows:
+5. Update all the plots when a new sample is selected. Additionally, you are welcome to create any layout that you would like for your dashboard.
 
 ## Requirements
 ### Bar Chart (30 points)
